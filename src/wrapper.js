@@ -36,16 +36,26 @@ function weatherDataWrapper(current) {
   };
 }
 
-function composed(a, b, c) {
+function checkErrors(data) {
+  if (data.cod === '404') {
+    return '404';
+  }
+  return data;
+}
+
+function composed(a, b, c, d) {
   return async function fn(x) {
-    return a(b(await c(x)));
+    const result = c(await d(x));
+    if (result === '404') return '404';
+    return a(b(result));
   };
 }
 
 const displayableWeatherData = composed(
   roundNumbers,
   weatherDataWrapper,
-  getWeatherData
+  checkErrors,
+  getWeatherData,
 );
 
 function getDataToDisplay(place) {

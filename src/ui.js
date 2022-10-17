@@ -1,22 +1,25 @@
 import { getDataToDisplay } from './wrapper';
 
 async function displayWeatherData(current) {
-  let date = new Date();
+  const date = new Date();
   document.querySelector('.description').textContent = current.description;
   document.querySelector(
-    '.place'
+    '.place',
   ).textContent = `${current.place}, ${current.country}`;
   document.querySelector('.current-date').textContent = date.toDateString();
   document.querySelector('.time').textContent = `${date.getHours()}:${
     date.getMinutes() < 10 ? '0' : ''
   }${date.getMinutes()}`;
-  document.querySelector('.temperature').textContent = current.temperature;
-  document.querySelector('.feels-like-temperature').textContent =
-    current.feelsLikeTemp;
-  document.querySelector('.humidity').textContent = `${current.humidity}%`;
-  document.querySelector('.chance-of-rain').textContent = `${current.rain} mm`;
   document.querySelector(
-    '.wind-speed'
+    '.temperature',
+  ).textContent = `${current.temperature} °C`;
+  document.querySelector(
+    '.feels-like-temperature',
+  ).textContent = `${current.feelsLikeTemp} °C`;
+  document.querySelector('.humidity').textContent = `${current.humidity}%`;
+  document.querySelector('.rain').textContent = `${current.rain} mm`;
+  document.querySelector(
+    '.wind-speed',
   ).textContent = `${current.windSpeed} m/s`;
 }
 
@@ -35,9 +38,25 @@ function toggleLoadingElement() {
   container.append(waitElement);
 }
 
+function displayError() {
+  document.querySelector('.info').textContent = 'City not found';
+}
+
+function clear() {
+  document.querySelector('.info').textContent = '';
+}
+
 async function displayWeather(place) {
+  clear();
   toggleLoadingElement();
+
   const data = await getDataToDisplay(place);
+
+  if (data === '404') {
+    displayError();
+    toggleLoadingElement();
+    return;
+  }
   toggleLoadingElement();
 
   displayWeatherData(data);

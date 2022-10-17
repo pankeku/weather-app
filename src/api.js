@@ -8,7 +8,7 @@ async function fetchWeatherData(url) {
       !(response.headers.get('Content-Type') || '').includes('application/json')
     ) {
       throw new Error(
-        'Response header "content-type" does not contain "application/json".'
+        'Response header "content-type" does not contain "application/json".',
       );
     }
     const responseToJson = await response.json();
