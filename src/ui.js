@@ -1,15 +1,15 @@
-import { getCurrentWeather } from './api';
+import { getDataToDisplay } from './wrapper';
 
-async function populateWeather(current) {
+async function displayWeatherData(current) {
   let date = new Date();
   document.querySelector('.description').textContent = current.description;
   document.querySelector(
     '.place'
   ).textContent = `${current.place}, ${current.country}`;
   document.querySelector('.current-date').textContent = date.toDateString();
-  document.querySelector(
-    '.time'
-  ).textContent = `${date.getHours()}:${date.getMinutes()}`;
+  document.querySelector('.time').textContent = `${date.getHours()}:${
+    date.getMinutes() < 10 ? '0' : ''
+  }${date.getMinutes()}`;
   document.querySelector('.temperature').textContent = current.temperature;
   document.querySelector('.feels-like-temperature').textContent =
     current.feelsLikeTemp;
@@ -21,8 +21,8 @@ async function populateWeather(current) {
 }
 
 async function init() {
-  const data = await getCurrentWeather('Vilnius');
-  populateWeather(data);
+  const data = await getDataToDisplay('London');
+  displayWeatherData(data);
 }
 
 export { init };
