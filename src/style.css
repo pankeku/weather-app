@@ -97,10 +97,14 @@ body {
   font-weight: 700;
 }
 
+.loading-container {
+    height: 220px;
+}
+
 .loading {
   display: inline-block;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 }
 .loading:after {
   content: ' ';

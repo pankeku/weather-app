@@ -25,7 +25,7 @@ async function displayWeatherData(current) {
 
 function toggleLoadingElement() {
   const container = document.querySelector('.container');
-  const loading = document.querySelector('.loading');
+  const loading = document.querySelector('.loading-container');
   const weatherContainer = document.querySelector('.current-weather-container');
   if (loading) {
     container.removeChild(loading);
@@ -33,9 +33,14 @@ function toggleLoadingElement() {
     return;
   }
   weatherContainer.classList.toggle('current-weather-container--hidden');
-  const waitElement = document.createElement('div');
-  waitElement.classList.add('loading');
-  container.append(waitElement);
+
+  const loadingContainer = document.createElement('div');
+  loadingContainer.classList.add('loading-container');
+
+  const loadingElement = document.createElement('div');
+  loadingContainer.append(loadingElement);
+  loadingElement.classList.add('loading');
+  container.insertBefore(loadingContainer, container.firstChild);
 }
 
 function displayError() {
