@@ -1,4 +1,7 @@
+import { loadListeners } from './listeners';
 import { getDataToDisplay } from './wrapper';
+
+loadListeners();
 
 async function displayWeatherData(current) {
   let date = new Date();
@@ -20,9 +23,13 @@ async function displayWeatherData(current) {
   ).textContent = `${current.windSpeed} m/s`;
 }
 
-async function init() {
-  const data = await getDataToDisplay('London');
+async function displayWeather(place) {
+  const data = await getDataToDisplay(place);
   displayWeatherData(data);
 }
 
-export { init };
+async function init() {
+  displayWeather('Vilnius');
+}
+
+export { init, displayWeather };
