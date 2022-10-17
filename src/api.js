@@ -1,5 +1,4 @@
 async function fetchWeatherData(url) {
-  let result;
   try {
     const response = await fetch(url, {
       mode: 'cors',
@@ -13,11 +12,10 @@ async function fetchWeatherData(url) {
       );
     }
     const responseToJson = await response.json();
-    result = responseToJson;
+    return responseToJson;
   } catch (err) {
     console.log(err);
   }
-  return result;
 }
 
 function getUrl(place) {
