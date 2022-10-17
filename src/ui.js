@@ -67,7 +67,7 @@ async function displayWeather(place) {
   displayWeatherData(data);
 }
 
-async function init() {
+function init() {
   displayWeather('Vilnius');
 }
 
