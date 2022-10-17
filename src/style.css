@@ -1,0 +1,43 @@
+.current-weather-container {
+    display: flex;
+    gap: 100px;
+}
+
+.current-weather-container--hidden {
+    display: none;
+}
+
+.search-box {
+    display: flex;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loading {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+  .loading:after {
+    content: " ";
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0) transparent #fff transparent;
+    animation: loading 1s linear infinite;
+  }
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

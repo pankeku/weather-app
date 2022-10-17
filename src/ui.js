@@ -1,7 +1,4 @@
-import { loadListeners } from './listeners';
 import { getDataToDisplay } from './wrapper';
-
-loadListeners();
 
 async function displayWeatherData(current) {
   let date = new Date();
@@ -23,8 +20,26 @@ async function displayWeatherData(current) {
   ).textContent = `${current.windSpeed} m/s`;
 }
 
+function toggleLoadingElement() {
+  const container = document.querySelector('.container');
+  const loading = document.querySelector('.loading');
+  const weatherContainer = document.querySelector('.current-weather-container');
+  if (loading) {
+    container.removeChild(loading);
+    weatherContainer.classList.toggle('current-weather-container--hidden');
+    return;
+  }
+  weatherContainer.classList.toggle('current-weather-container--hidden');
+  const waitElement = document.createElement('div');
+  waitElement.classList.add('loading');
+  container.append(waitElement);
+}
+
 async function displayWeather(place) {
+  toggleLoadingElement();
   const data = await getDataToDisplay(place);
+  toggleLoadingElement();
+
   displayWeatherData(data);
 }
 
