@@ -1,7 +1,7 @@
 import { getCurrentWeather } from './api';
 
-async function getWeatherData(place) {
-  const currentWeatherData = await getCurrentWeather(place);
+async function getWeatherData(location) {
+  const currentWeatherData = await getCurrentWeather(location);
   return currentWeatherData;
 }
 
@@ -15,24 +15,17 @@ function roundNumbers(data) {
 }
 
 function weatherDataWrapper(current) {
-  const place = current.name;
-  const country = current.sys.country;
-  const description = current.weather[0].description;
-  const temperature = current.main.temp;
-  const feelsLikeTemp = current.main.feels_like;
-  const humidity = current.main.humidity;
-  const windSpeed = current.wind.speed;
-  const rain = !current.rain ? 0 : current.rain['1h'];
+  const { name, sys, main, weather, wind, rain } = current;
 
   return {
-    place,
-    country,
-    description,
-    temperature,
-    feelsLikeTemp,
-    humidity,
-    windSpeed,
-    rain,
+    location: name,
+    country: sys.country,
+    description: weather[0].description,
+    temperature: main.temp,
+    feelsLikeTemp: main.feels_like,
+    humidity: main.humidity,
+    windSpeed: wind.speed,
+    precipitation: !rain ? 0 : current.rain['1h'],
   };
 }
 
@@ -43,23 +36,29 @@ function checkErrors(data) {
   return data;
 }
 
-function composed(a, b, c, d) {
-  return async function fn(x) {
-    const result = c(await d(x));
-    if (result === '404') return '404';
-    return a(b(result));
+function compose(roundNums, wrapData, checkErrs, getData) {
+  return async function fn(location) {
+    const getDataResult = await getData(location);
+    const validData = checkErrs(getDataResult);
+    if (validData === '404') {
+      return '404';
+    }
+    const wrappedData = wrapData(validData);
+    const result = roundNums(wrappedData);
+
+    return result;
   };
 }
 
-const displayableWeatherData = composed(
+const displayableWeatherData = compose(
   roundNumbers,
   weatherDataWrapper,
   checkErrors,
-  getWeatherData,
+  getWeatherData
 );
 
-function getDataToDisplay(place) {
-  const data = displayableWeatherData(place);
+function getDataToDisplay(location) {
+  const data = displayableWeatherData(location);
   return data;
 }
 
