@@ -1,4 +1,5 @@
-import { displayWeather } from './ui';
+import { switchTemperatureScales } from './temperatureConversion';
+import { displayConvertedTemperature, displayWeather } from './ui';
 
 function debounce(fn, delay) {
   let timeoutID;
@@ -22,6 +23,11 @@ function loadListeners() {
       }
     }, 500)
   );
+
+  document.querySelector('.switch').addEventListener('click', () => {
+    switchTemperatureScales();
+    displayConvertedTemperature();
+  });
 }
 
 export { loadListeners };
