@@ -60,11 +60,12 @@ async function displayWeather(location) {
   if (data === '404') {
     displayError();
     toggleLoadingElement();
-    return;
+    return false;
   }
   toggleLoadingElement();
 
   displayWeatherData(data);
+  return true;
 }
 
 function init() {
