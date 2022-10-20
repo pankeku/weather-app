@@ -1,0 +1,127 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap);
+
+html {
+  font-family: montserrat, sans-serif;
+  font-size: 20px;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-weather-container {
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-weather-container--hidden {
+  display: none;
+}
+
+.current-weather-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.current-weather-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.8rem;
+}
+
+.search-box {
+  display: flex;
+}
+
+.search {
+  all: unset;
+  width: 200px;
+}
+
+.search-submit {
+  background-color: #fff;
+  border: none;
+  height: 20px;
+  width: 20px;
+  background: url(../static/icons/search.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.info {
+  font-size: 0.7rem;
+  color: red;
+}
+
+.description {
+  font-size: 1.5rem;
+}
+
+.place {
+  margin-bottom: 10px;
+}
+
+.current-date,
+.time,
+.place {
+  font-size: 0.8rem;
+}
+
+.temperature {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.detail-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-box label {
+  font-weight: 700;
+}
+
+.loading-container {
+    height: 220px;
+}
+
+.loading {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+.loading:after {
+  content: ' ';
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid rgb(0, 0, 0);
+  border-color: rgb(0, 0, 0) transparent #fff transparent;
+  animation: loading 1s linear infinite;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
