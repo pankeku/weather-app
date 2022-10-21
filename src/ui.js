@@ -1,3 +1,4 @@
+import { getConvertedTemperatures, preferedUnit } from './temperatureConversion';
 import { getDataToDisplay } from './wrapper';
 
 function displayWeatherData(current) {
@@ -21,6 +22,15 @@ function displayWeatherData(current) {
   document.querySelector(
     '.wind-speed'
   ).textContent = `${current.windSpeed} m/s`;
+
+  alignDisplayWithScale();
+  toggleSwitchLabel();
+}
+
+function alignDisplayWithScale() {
+  if (preferedUnit === 'fahrenheit') {
+    displayConvertedTemperature();
+  }
 }
 
 function toggleLoadingElement() {
@@ -41,6 +51,25 @@ function toggleLoadingElement() {
   loadingContainer.append(loadingElement);
   loadingElement.classList.add('loading');
   container.insertBefore(loadingContainer, container.firstChild);
+}
+
+function displayConvertedTemperature() {
+  const temperature = document.querySelector('.temperature');
+  const feelsLike = document.querySelector('.feels-like-temperature');
+
+  const temperatures = getConvertedTemperatures(temperature, feelsLike);
+  const [convertedTemp, convertedFeelsLikeTemp] = temperatures;
+
+  temperature.textContent = convertedTemp;
+  feelsLike.textContent = convertedFeelsLikeTemp;
+
+  toggleSwitchLabel();
+}
+
+function toggleSwitchLabel() {
+  const switchElement = document.querySelector('.switch');
+
+  switchElement.textContent = `Display in ${preferedUnit === 'celsius' ? '°C' : '°F'}`;
 }
 
 function displayError() {
@@ -71,4 +100,4 @@ function init() {
   displayWeather('Vilnius');
 }
 
-export { init, displayWeather };
+export { init, displayWeather, displayConvertedTemperature};

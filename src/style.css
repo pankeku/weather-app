@@ -97,6 +97,12 @@ body {
   font-weight: 700;
 }
 
+.switch {
+  font-size: 0.6rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 .loading-container {
     height: 220px;
 }
