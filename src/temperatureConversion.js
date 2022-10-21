@@ -1,43 +1,47 @@
-let preferedScale = 'celsius';
+let preferedUnit = 'celsius';
 
 const scales = {
   celsius: {
-    conversion(x) {
-      return ((x - 32) * 5) / 9;
-    },
     symbol: 'C',
   },
 
   fahrenheit: {
-    conversion(x) {
-      return (x * 9) / 5 + 32;
-    },
     symbol: 'F',
   },
 };
 
+function convertUnits(x) {
+  if (preferedUnit === 'celsius') {
+    return ((x - 32) * 5) / 9;
+  }
+
+  return (x * 9) / 5 + 32;
+}
+
 function switchTemperatureScales() {
-  const available = Object.keys(scales);
-  preferedScale = available.filter((scale) => scale !== preferedScale)[0];
+  const availableUnits = Object.keys(scales);
+  preferedUnit = availableUnits.find((scale) => scale !== preferedUnit);
 }
 
-function createTemperatureString(number, scale) {
-  return `${Math.round(scale.conversion(number))} °${scale.symbol}`;
+function stringifyTemperature(degree, scale) {
+  return `${Math.round(convertUnits(degree))} °${scale.symbol}`;
 }
 
-function getTemperatureNumbers(elements) {
-  const numbers = elements.map((element) => element.textContent.split(' ')[0]);
-  return numbers;
+function parseTemperatureData(elements) {
+  const degrees = (elements || []).map(
+    (element) => element.textContent.split(' ')[0]
+  );
+  return degrees;
 }
 
-function getConvertedTemperature(...elements) {
-  const scale = scales[preferedScale];
-  const numbers = getTemperatureNumbers(elements);
-  const convertedTemperature = numbers.map((value) =>
-    createTemperatureString(value, scale)
+function getConvertedTemperatures(...elements) {
+  const scale = scales[preferedUnit];
+  const degrees = parseTemperatureData(elements);
+  const convertedTemperature = degrees.map((value) =>
+    stringifyTemperature(value, scale)
   );
 
   return convertedTemperature;
 }
 
-export { switchTemperatureScales, getConvertedTemperature, preferedScale };
+export { switchTemperatureScales, getConvertedTemperatures, preferedUnit };

@@ -1,4 +1,4 @@
-import { getConvertedTemperature, preferedScale } from './temperatureConversion';
+import { getConvertedTemperatures, preferedUnit } from './temperatureConversion';
 import { getDataToDisplay } from './wrapper';
 
 function displayWeatherData(current) {
@@ -23,12 +23,12 @@ function displayWeatherData(current) {
     '.wind-speed'
   ).textContent = `${current.windSpeed} m/s`;
 
-  alignDisplayWithScale(current);
-  toggleSwitchMessage();
+  alignDisplayWithScale();
+  toggleSwitchLabel();
 }
 
 function alignDisplayWithScale() {
-  if (preferedScale === 'fahrenheit') {
+  if (preferedUnit === 'fahrenheit') {
     displayConvertedTemperature();
   }
 }
@@ -57,23 +57,19 @@ function displayConvertedTemperature() {
   const temperature = document.querySelector('.temperature');
   const feelsLike = document.querySelector('.feels-like-temperature');
 
-  const temperatures = getConvertedTemperature(temperature, feelsLike);
+  const temperatures = getConvertedTemperatures(temperature, feelsLike);
   const [convertedTemp, convertedFeelsLikeTemp] = temperatures;
 
   temperature.textContent = convertedTemp;
   feelsLike.textContent = convertedFeelsLikeTemp;
 
-  toggleSwitchMessage();
+  toggleSwitchLabel();
 }
 
-function toggleSwitchMessage() {
+function toggleSwitchLabel() {
   const switchElement = document.querySelector('.switch');
 
-  if (preferedScale === 'celsius') {
-    switchElement.textContent = 'Display °F';
-    return;
-  }
-  switchElement.textContent = 'Display °C';
+  switchElement.textContent = `Display in ${preferedUnit === 'celsius' ? '°C' : '°F'}`;
 }
 
 function displayError() {
